@@ -784,6 +784,8 @@ async function savePricing(event) {
     if (btn) { btn.disabled = false; btn.textContent = origText; }
 }
 
+setupAuth();
+
 if (localStorage.getItem(PIN_STORAGE_KEY) === "true") {
     showDashboard();
 } else {
