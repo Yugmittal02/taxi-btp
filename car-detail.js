@@ -22,7 +22,7 @@ import {
 
   let settings = {
     waNumber: "919079923104",
-    callNumber: "919079923104",
+    callNumber: "9079923104",
     siteName: "Shriram Car Rental"
   };
 
@@ -245,7 +245,7 @@ import {
       if (btn) btn.addEventListener("click", (e) => {
         e.preventDefault();
         trackClick("call");
-        window.location.href = `tel:+${settings.callNumber}`;
+        window.location.href = `tel:${settings.callNumber}`;
       });
     });
   }
