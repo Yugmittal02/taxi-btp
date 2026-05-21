@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Balaji Car Rental">
+  <rect width="512" height="512" rx="96" fill="#dc2626"/>
+  <path d="M112 286c12-54 42-92 84-92h120c42 0 72 38 84 92h28c18 0 32 14 32 32v42c0 18-14 32-32 32h-18c-7 25-29 44-56 44s-49-19-56-44h-84c-7 25-29 44-56 44s-49-19-56-44H84c-18 0-32-14-32-32v-42c0-18 14-32 32-32h28z" fill="#fff7ed"/>
+  <path d="M176 222h160c21 0 38 25 48 64H128c10-39 27-64 48-64z" fill="#f97316"/>
+  <circle cx="158" cy="388" r="36" fill="#111827"/>
+  <circle cx="354" cy="388" r="36" fill="#111827"/>
+</svg>

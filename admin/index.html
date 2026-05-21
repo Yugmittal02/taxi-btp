@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Balaji Car Rental</title>
+    <meta name="theme-color" content="#1e1e2d">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body class="admin-body">
+    <div id="login-container" class="login-page">
+                <div class="login-card">
+            <h1>Admin Login</h1>
+            <p class="login-note">Enter the admin PIN to manage cars, bookings, and analytics.</p>
+            <form id="loginForm">
+                <input type="password" id="pin" placeholder="Enter PIN" inputmode="numeric" autocomplete="one-time-code" required>
+                <button type="submit" class="btn btn-red">Unlock</button>
+            </form>
+            <p id="login-error" class="error"></p>
+        </div>
+    </div>
+
+    <div id="admin-dashboard" class="dashboard-container" style="display: none;">
+        <aside class="sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+               <div class="logo"><span class="logo-icon">&#128663;</span> <span class="logo-text">Admin Panel</span></div>
+            </div>
+            <nav>
+                <a href="#stats" class="nav-link active" data-tab="stats"><span class="admin-icon" aria-hidden="true">D</span> Dashboard</a>
+                <a href="#leads" class="nav-link" data-tab="leads"><span class="admin-icon" aria-hidden="true">L</span> Booking Leads</a>
+                <a href="#cars" class="nav-link" data-tab="cars"><span class="admin-icon" aria-hidden="true">C</span> Manage Cars</a>
+                <a href="#pricing" class="nav-link" data-tab="pricing"><span class="admin-icon" aria-hidden="true">P</span> Pricing</a>
+                <a href="#settings" class="nav-link" data-tab="settings"><span class="admin-icon" aria-hidden="true">S</span> Site Settings</a>
+                <button id="installAppBtn" class="logout-btn" style="display: none; background: var(--green); color: white; margin-bottom: 10px;"><span class="admin-icon" aria-hidden="true">↓</span> Install App</button>
+                <button id="logoutBtn" class="logout-btn"><span class="admin-icon" aria-hidden="true">X</span> Logout</button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <button class="admin-menu-toggle" id="adminMenuToggle" aria-label="Open admin menu"><span aria-hidden="true">Menu</span></button>
+                <h1 id="tab-title">Dashboard Overview</h1>
+                <div class="header-status-group">
+                    <div class="offline-status" id="offlineStatus" hidden>Offline cache</div>
+                    <div class="live-status">
+                        <span class="pulse-green"></span> Live Visitors: <b id="live-visitors">0</b>
+                    </div>
+                </div>
+            </header>
+
+            <div id="tab-stats" class="tab-pane active">
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-icon" aria-hidden="true">PV</span>
+                        <div class="stat-info">
+                            <span class="label">Total Page Views</span>
+                            <h3 id="stat-total-visitors">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-icon" aria-hidden="true">UV</span>
+                        <div class="stat-info">
+                            <span class="label">Unique Visitors</span>
+                            <h3 id="stat-unique-visitors">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-icon" aria-hidden="true">WA</span>
+                        <div class="stat-info">
+                            <span class="label">WhatsApp Clicks</span>
+                            <h3 id="stat-wa-clicks">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-icon" aria-hidden="true">CL</span>
+                        <div class="stat-info">
+                            <span class="label">Call Clicks</span>
+                            <h3 id="stat-call-clicks">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-icon" aria-hidden="true">BK</span>
+                        <div class="stat-info">
+                            <span class="label">Total Bookings</span>
+                            <h3 id="stat-bookings">0</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-grid">
+                    <section class="dashboard-panel">
+                        <div class="section-header-flex">
+                            <h2>Daily Trend</h2>
+                            <button class="btn-export" id="exportAnalyticsBtn">Export Analytics</button>
+                        </div>
+                        <div id="dailyTrendChart" class="trend-chart"></div>
+                    </section>
+
+                    <section class="dashboard-panel">
+                        <h2>Anonymized Visitors</h2>
+                        <div class="table-responsive compact-table">
+                            <table id="visitorTable">
+                                <thead>
+                                    <tr>
+                                        <th>Hash</th>
+                                        <th>Country</th>
+                                        <th>Visits</th>
+                                        <th>First Seen</th>
+                                        <th>Last Seen</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="dashboard-recent dashboard-panel">
+                    <h2>Recent Leads</h2>
+                    <div class="table-responsive">
+                        <table id="recentLeadsTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Car Type</th>
+                                    <th>Source</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-leads" class="tab-pane">
+                <div class="content-section">
+                    <div class="section-header-flex">
+                        <h2>All Booking Enquiries</h2>
+                        <button class="btn-export" id="exportLeadsBtn">Export Leads</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="allLeadsTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>City</th>
+                                    <th>Car</th>
+                                    <th>Duration</th>
+                                    <th>Source</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-cars" class="tab-pane">
+                <div class="content-section">
+                    <div class="section-header-flex">
+                        <h2>Cars Inventory</h2>
+                        <button class="btn btn-red btn-sm" id="addNewCarBtn">Add New Car</button>
+                    </div>
+                    <div class="cars-grid-admin" id="carsListAdmin"></div>
+                </div>
+            </div>
+
+            <div id="tab-pricing" class="tab-pane">
+                <div class="content-section">
+                    <h2>Manage Pricing Plans</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 24px;">Set daily, weekly, and monthly pricing. These are shown on the website.</p>
+                        <div class="form-row-2">
+                            <div class="form-group"><label>Daily Rate (&#8377;)</label><input type="text" id="priceDaily" name="priceDaily" placeholder="999"></div>
+                            <div class="form-group"><label>Daily KM Limit</label><input type="text" id="kmDaily" name="kmDaily" placeholder="200"></div>
+                        </div>
+                        <div class="form-row-2">
+                            <div class="form-group"><label>Weekly Rate (&#8377;)</label><input type="text" id="priceWeekly" name="priceWeekly" placeholder="5999"></div>
+                            <div class="form-group"><label>Weekly KM Limit</label><input type="text" id="kmWeekly" name="kmWeekly" placeholder="1000"></div>
+                        </div>
+                        <div class="form-row-2">
+                            <div class="form-group"><label>Monthly Rate (&#8377;)</label><input type="text" id="priceMonthly" name="priceMonthly" placeholder="19999"></div>
+                            <div class="form-group"><label>Monthly KM Limit</label><input type="text" id="kmMonthly" name="kmMonthly" placeholder="3000"></div>
+                        </div>
+                        <div class="form-group"><label>Extra KM Charge (&#8377;/km)</label><input type="text" id="extraKmCharge" name="extraKmCharge" placeholder="2"></div>
+                        <button type="submit" class="btn btn-red">Save Pricing</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="tab-settings" class="tab-pane">
+                <div class="content-section">
+                    <h2>General Site Configuration</h2>
+                    <form id="settingsForm" class="settings-form">
+                        <div class="form-group">
+                            <label>Site Name</label>
+                            <input type="text" id="siteName" name="siteName">
+                        </div>
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label>Hero Title Line 1</label>
+                                <input type="text" id="heroTitle1" name="heroTitle1">
+                            </div>
+                            <div class="form-group">
+                                <label>Hero Title Line 2</label>
+                                <input type="text" id="heroTitle2" name="heroTitle2">
+                            </div>
+                        </div>
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label>WhatsApp Number (without +)</label>
+                                <input type="text" id="waNumber" name="waNumber">
+                            </div>
+                            <div class="form-group">
+                                <label>Call Number</label>
+                                <input type="text" id="callNumber" name="callNumber">
+                            </div>
+                        </div>
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label>Announcement Bar Text</label>
+                                <input type="text" id="announceText" name="announceText">
+                            </div>
+                            <div class="form-group">
+                                <label>Starting Price</label>
+                                <input type="text" id="startingPrice" name="startingPrice">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Pickup Locations (Format: Title: Description, one per line)</label>
+                            <textarea id="pickupLocations" name="pickupLocations" rows="4" placeholder="Bharatpur City: Main Branch - 24/7 Available&#10;Railway Station: Pickup from station gate"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-red">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="carModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <button class="close" type="button" aria-label="Close">&times;</button>
+            <h2 id="modalTitle">Add New Car</h2>
+            <form id="carForm">
+                <input type="hidden" id="carId">
+                <input type="hidden" id="carSeedKey">
+                <input type="hidden" id="carSeeded">
+                <div class="form-group">
+                    <label>Car Name</label>
+                    <input type="text" id="carName" required>
+                </div>
+                <div class="form-group">
+                    <label>Category (e.g., 5seater, suv)</label>
+                    <input type="text" id="carCategory" required>
+                </div>
+                <div class="form-group">
+                    <label>Price per Day</label>
+                    <input type="text" id="carPrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="text" id="carImage" placeholder="assets/car-5seater.png">
+                </div>
+                <div class="form-group">
+                    <label>Best For</label>
+                    <input type="text" id="carBestFor" placeholder="Best for city travel">
+                </div>
+                <div class="form-group">
+                    <label>Specifications (comma separated)</label>
+                    <input type="text" id="carSpecs" placeholder="AC, Manual, Petrol, 5 Seats">
+                </div>
+                <div class="form-group">
+                    <label>Tags (comma separated for filters)</label>
+                    <input type="text" id="carTags" placeholder="hatchback, popular">
+                </div>
+                <button type="submit" class="btn btn-red">Save Car</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

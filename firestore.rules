@@ -1,0 +1,113 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // PIN-only admin is only a UI gate. These rules validate shapes and reduce
+    // accidental writes, but they cannot prove a writer is the real admin.
+    // For stronger production admin protection, add Firebase Auth/custom claims
+    // or move admin writes behind a trusted server endpoint.
+    // Enable Firestore TTL policies on analytics_ips.expiresAt and
+    // analytics_live.expiresAt so hashed visitor records age out automatically.
+
+    function isShortString(value, max) {
+      return value is string && value.size() <= max;
+    }
+
+    function validBooking() {
+      return request.resource.data.keys().hasOnly([
+        'name', 'phone', 'city', 'carType', 'date', 'duration', 'note',
+        'source', 'intent', 'status', 'timestamp'
+      ])
+      && isShortString(request.resource.data.name, 120)
+      && isShortString(request.resource.data.phone, 30)
+      && (!('city' in request.resource.data) || isShortString(request.resource.data.city, 120))
+      && (!('carType' in request.resource.data) || isShortString(request.resource.data.carType, 120))
+      && (!('date' in request.resource.data) || isShortString(request.resource.data.date, 40))
+      && (!('duration' in request.resource.data) || isShortString(request.resource.data.duration, 40))
+      && (!('source' in request.resource.data) || isShortString(request.resource.data.source, 80))
+      && (!('intent' in request.resource.data) || isShortString(request.resource.data.intent, 40))
+      && (!('status' in request.resource.data) || isShortString(request.resource.data.status, 40))
+      && (!('note' in request.resource.data) || isShortString(request.resource.data.note, 500));
+    }
+
+    function validCar() {
+      return request.resource.data.keys().hasOnly([
+        'name', 'category', 'badge', 'price', 'image', 'bestFor', 'specs', 'tags',
+        'seedKey', 'seeded', 'createdAt', 'updatedAt'
+      ])
+      && isShortString(request.resource.data.name, 120)
+      && isShortString(request.resource.data.category, 40)
+      && isShortString(request.resource.data.price, 20)
+      && isShortString(request.resource.data.image, 300)
+      && (!('bestFor' in request.resource.data) || isShortString(request.resource.data.bestFor, 180))
+      && (!('seedKey' in request.resource.data) || isShortString(request.resource.data.seedKey, 80));
+    }
+
+    function validSettings() {
+      return request.resource.data.keys().hasOnly([
+        'siteName', 'heroTitle1', 'heroTitle2', 'waNumber', 'callNumber',
+        'announceText', 'startingPrice', 'updatedAt'
+      ])
+      && (!('siteName' in request.resource.data) || isShortString(request.resource.data.siteName, 80))
+      && (!('heroTitle1' in request.resource.data) || isShortString(request.resource.data.heroTitle1, 120))
+      && (!('heroTitle2' in request.resource.data) || isShortString(request.resource.data.heroTitle2, 80))
+      && (!('waNumber' in request.resource.data) || isShortString(request.resource.data.waNumber, 24))
+      && (!('callNumber' in request.resource.data) || isShortString(request.resource.data.callNumber, 24))
+      && (!('announceText' in request.resource.data) || isShortString(request.resource.data.announceText, 180))
+      && (!('startingPrice' in request.resource.data) || isShortString(request.resource.data.startingPrice, 20));
+    }
+
+    function validVisitorHash() {
+      return request.resource.data.ipHash is string
+        && request.resource.data.ipHash.matches('^[a-f0-9]{64}$')
+        && request.resource.data.keys().hasOnly([
+          'ipHash', 'firstSeen', 'lastSeen', 'lastVisitDate', 'visits', 'countryCode',
+          'countryName', 'lastPath', 'userAgentSummary', 'expiresAt'
+        ]);
+    }
+
+    match /cars/{carId} {
+      allow read: if true;
+      allow create, update: if validCar();
+      allow delete: if true;
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow create, update: if validSettings();
+    }
+
+    match /metadata/{docId} {
+      allow read, write: if true;
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if validBooking();
+      allow read, update, delete: if true;
+    }
+
+    match /analytics/{docId} {
+      allow read: if true;
+      allow create, update: if request.resource.data.keys().size() <= 12;
+    }
+
+    match /analytics_daily/{dayId} {
+      allow read: if true;
+      allow create, update: if request.resource.data.keys().hasOnly([
+        'date', 'pageViews', 'uniqueVisitors', 'lastUpdated'
+      ]);
+    }
+
+    match /analytics_ips/{ipHash} {
+      allow read: if true;
+      allow create, update: if validVisitorHash();
+    }
+
+    match /analytics_live/{sessionId} {
+      allow read: if true;
+      allow create, update: if request.resource.data.keys().hasOnly([
+        'sessionId', 'lastSeen', 'path', 'expiresAt'
+      ]);
+    }
+  }
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Car Details - Balaji Car Rental</title>
+<meta name="description" content="View full specifications and book this self-drive car.">
+<meta name="theme-color" content="#1a1a2e">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header" id="siteHeader">
+<div class="container header-inner">
+<a href="index.html" class="logo" id="siteLogo"><span class="logo-icon">&#128663;</span> <span class="logo-text">Balaji Car Rental</span></a>
+<nav class="nav" id="mainNav">
+<a href="index.html">Home</a><a href="index.html#booking">Book Now</a><a href="index.html#vehicles">Cars</a><a href="index.html#faq">FAQ</a><a href="index.html#contact">Contact</a>
+</nav>
+<a href="#" class="btn btn-whatsapp btn-sm header-cta" id="headerBookBtn">Book Now</a>
+<button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+</div>
+</header>
+
+<main class="car-detail-page">
+<div class="container">
+<!-- Back Button -->
+<a href="index.html#vehicles" class="back-link" id="backLink">&#8592; Back to All Cars</a>
+
+<!-- Car Hero -->
+<div class="car-detail-hero" id="carDetailHero">
+<div class="car-detail-gallery">
+<div class="car-detail-main-img" id="carMainImg">
+<img src="assets/car-5seater.png" alt="Car" id="carDetailImage">
+<span class="car-detail-badge" id="carDetailBadge">Available</span>
+</div>
+</div>
+<div class="car-detail-info">
+<h1 id="carDetailName">Loading...</h1>
+<p class="car-detail-best" id="carDetailBest">Loading specifications...</p>
+<div class="car-detail-price-box">
+<div class="car-detail-price" id="carDetailPrice">&#8377;999 <small>/day</small></div>
+<span class="car-detail-avail">&#9989; Available Now</span>
+</div>
+<div class="car-detail-actions">
+<a href="#" class="btn btn-whatsapp" id="carBookWhatsApp">&#128242; Book on WhatsApp</a>
+<a href="#" class="btn btn-call" id="carBookCall">&#128222; Call Now</a>
+</div>
+</div>
+</div>
+
+<!-- Specifications -->
+<div class="car-detail-specs-section">
+<h2>Full Specifications</h2>
+<div class="car-detail-specs-grid" id="carSpecsGrid">
+<!-- Populated by JS -->
+</div>
+</div>
+
+<!-- Condition -->
+<div class="car-detail-condition">
+<div class="condition-item"><span>&#9989;</span> Clean & Well Maintained</div>
+<div class="condition-item"><span>&#128678;</span> Safe Driving</div>
+<div class="condition-item"><span>&#9981;</span> Full Fuel Tank</div>
+<div class="condition-item"><span>&#128295;</span> Regular Service</div>
+<div class="condition-item"><span>&#128274;</span> Insured Vehicle</div>
+<div class="condition-item"><span>&#128663;</span> Self-Drive Ready</div>
+</div>
+
+<!-- Booking Form -->
+<div class="car-detail-booking" id="carBookingSection">
+<h2>Book This Car</h2>
+<p>Fill your details below. Your booking will be saved & sent to WhatsApp instantly.</p>
+<form id="carDetailBookingForm" class="car-detail-form">
+<input type="hidden" name="carType" id="bookingCarType">
+<div class="form-row-2">
+<div class="form-group"><label>Your Name *</label><input type="text" name="name" placeholder="Full name" required></div>
+<div class="form-group"><label>Phone *</label><input type="tel" name="phone" placeholder="Phone number" required></div>
+</div>
+<div class="form-row-2">
+<div class="form-group"><label>Pickup City</label><input type="text" name="city" placeholder="City / Location"></div>
+<div class="form-group"><label>Driving License No.</label><input type="text" name="license" placeholder="DL number"></div>
+</div>
+<div class="form-row-2">
+<div class="form-group"><label>Pickup Date</label><input type="date" name="date"></div>
+<div class="form-group"><label>Duration</label>
+<select name="duration"><option value="">Select duration</option><option>1 Day</option><option>2 Days</option><option>3 Days</option><option>1 Week</option><option>2 Weeks</option><option>1 Month</option></select>
+</div>
+</div>
+<div class="form-group" style="width:100%"><label>Special Request</label><textarea name="note" placeholder="Any special request..."></textarea></div>
+<button type="submit" class="btn btn-whatsapp" style="width:100%">&#128242; Confirm & Send on WhatsApp</button>
+</form>
+</div>
+
+<!-- Similar Cars -->
+<div class="car-detail-similar" id="similarCarsSection" style="display:none">
+<h2>Similar Cars You May Like</h2>
+<div class="vehicles-grid" id="similarCarsGrid"></div>
+</div>
+</div>
+</main>
+
+<footer class="footer" id="contact">
+<div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><div class="logo"><span class="logo-icon">&#128663;</span> <span class="logo-text">Balaji Car Rental</span></div><p>Book clean, well-maintained self-drive cars starting &#8377;999/day.</p></div>
+<div class="footer-links"><h4>Quick Links</h4><a href="index.html">Home</a><a href="index.html#booking">Book Now</a><a href="index.html#vehicles">Cars</a><a href="index.html#faq">FAQ</a></div>
+<div class="footer-links"><h4>Contact Us</h4>
+<div class="footer-contact-item"><span>&#128242;</span><a href="#" id="footerWA">WhatsApp: 9079923104</a></div>
+<div class="footer-contact-item"><span>&#128222;</span><a href="#" id="footerCall">Call: 9079923104</a></div>
+</div>
+</div>
+</div>
+<div class="footer-bottom">&#169; 2026 Balaji Car Rental. All rights reserved.</div>
+<div class="footer-powered">Developed &amp; Powered by <a href="https://krixov.com" target="_blank" rel="noopener">krixov.com</a></div>
+</div></footer>
+
+<a href="#" id="floatWhatsApp" class="float-whatsapp" aria-label="Chat on WhatsApp">
+<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.612.637l4.697-1.415A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.315 0-4.458-.764-6.182-2.054l-.144-.112-3.092.931.87-3.178-.12-.149A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script type="module" src="car-detail.js"></script>
+</body>
+</html>
