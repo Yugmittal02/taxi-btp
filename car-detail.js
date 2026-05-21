@@ -23,7 +23,7 @@ import {
   let settings = {
     waNumber: "919079923104",
     callNumber: "919079923104",
-    siteName: "Balaji Car Rental"
+    siteName: "Shriram Car Rental"
   };
 
   const params = new URLSearchParams(window.location.search);
@@ -99,7 +99,7 @@ import {
   }
 
   function renderCarDetail(car) {
-    document.title = `${car.name} - Balaji Car Rental`;
+    document.title = `${car.name} - Shriram Car Rental`;
     
     const img = document.getElementById("carDetailImage");
     if (img) { img.src = car.image || "assets/car-5seater.png"; img.alt = car.name; }

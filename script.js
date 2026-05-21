@@ -1,4 +1,4 @@
-/* ===== Balaji Car Rental - Main Script (static fallback + Firebase hydration) ===== */
+/* ===== Shriram Car Rental - Main Script (static fallback + Firebase hydration) ===== */
 import {
   db,
   seedInitialCarsIfNeeded,
@@ -20,7 +20,7 @@ import {
   let settings = {
     waNumber: "919079923104",
     callNumber: "919079923104",
-    siteName: "Balaji Car Rental",
+    siteName: "Shriram Car Rental",
     startingPrice: "999",
     heroTitle1: "Book Your Self-Drive Car",
     heroTitle2: "in One Tap",
@@ -98,10 +98,10 @@ import {
   }
 
   function updateDOMWithSettings() {
-    document.title = `${settings.siteName || "Balaji Car Rental"} - Book Self-Drive Car`;
+    document.title = `${settings.siteName || "Shriram Car Rental"} - Book Self-Drive Car`;
 
     document.querySelectorAll("#siteLogo, .footer-brand .logo").forEach((el) => {
-      el.innerHTML = `<span class="logo-icon">&#128663;</span> <span class="logo-text">${escapeHTML(settings.siteName || "Balaji Car Rental")}</span>`;
+      el.innerHTML = `<span class="logo-icon">&#128663;</span> <span class="logo-text">${escapeHTML(settings.siteName || "Shriram Car Rental")}</span>`;
     });
 
     const heroTitle = document.getElementById("heroTitle");

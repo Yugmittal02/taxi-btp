@@ -670,7 +670,7 @@ function downloadCSV(filename, rows, columns) {
 }
 
 function exportLeads() {
-    downloadCSV("balaji-leads.csv", state.leads || [], [
+    downloadCSV("shriram-leads.csv", state.leads || [], [
         { label: "Date", value: (row) => formatDate(row.timestamp) },
         { label: "Name", value: (row) => row.name },
         { label: "Phone", value: (row) => row.phone },
@@ -687,7 +687,7 @@ function exportLeads() {
 function exportAnalytics() {
     const dailyRows = (state.daily || []).map((row) => ({ type: "daily", ...row }));
     const visitorRows = (state.visitors || []).map((row) => ({ type: "visitor", ...row }));
-    downloadCSV("balaji-analytics.csv", [...dailyRows, ...visitorRows], [
+    downloadCSV("shriram-analytics.csv", [...dailyRows, ...visitorRows], [
         { label: "Type", value: (row) => row.type },
         { label: "Date", value: (row) => row.date || "" },
         { label: "Page Views", value: (row) => row.pageViews || "" },
