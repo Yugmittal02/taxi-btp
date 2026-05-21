@@ -708,7 +708,7 @@ window.addEventListener("online", updateOfflineStatus);
 window.addEventListener("offline", updateOfflineStatus);
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
+    navigator.serviceWorker.register("/admin/sw.js").catch(() => {});
 }
 
 let deferredPrompt;

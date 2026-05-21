@@ -1,14 +1,14 @@
 {
   "name": "Shriram Car Rental Admin",
   "short_name": "Admin",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/admin/",
+  "scope": "/admin/",
   "display": "standalone",
   "background_color": "#1e1e2d",
   "theme_color": "#1e1e2d",
   "icons": [
     {
-      "src": "./icon.svg",
+      "src": "/admin/icon.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
