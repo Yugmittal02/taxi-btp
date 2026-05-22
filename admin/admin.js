@@ -466,7 +466,7 @@ function renderCars(cars = []) {
     if (!carsList) return;
     carsList.innerHTML = cars.length ? cars.map((car) => `
         <article class="admin-car-card">
-            <img src="../${escapeHTML(car.image)}" alt="${escapeHTML(car.name || "Car")}" loading="lazy" onerror="this.src='../assets/car-5seater.png'">
+            <img src="${(car.image || '').startsWith('http') || (car.image || '').startsWith('data:') ? escapeHTML(car.image) : '../' + escapeHTML(car.image || 'assets/car-5seater.png')}" alt="${escapeHTML(car.name || "Car")}" loading="lazy" onerror="this.src='../assets/car-5seater.png'">
             <div class="admin-car-info">
                 <h3>${escapeHTML(car.name || "Untitled car")}</h3>
                 <p>${escapeHTML(car.category || "-")} | &#8377;${escapeHTML(car.price || "-")}/day</p>
