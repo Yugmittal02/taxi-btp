@@ -130,6 +130,12 @@ import {
             return `<div class="location-card"><span class="location-icon">&#128205;</span><h4>${escapeHTML(title)}</h4><p>${escapeHTML(desc)}</p></div>`;
         }).join("");
     }
+
+    const telNumber = settings.callNumber || "9079923104";
+    const cleanNum = telNumber.startsWith("+") ? telNumber : "+91" + telNumber;
+    document.querySelectorAll("[data-call]").forEach((el) => {
+        el.href = `tel:${cleanNum}`;
+    });
   }
 
   function updateDOMWithPricing(pricing) {
@@ -380,9 +386,8 @@ import {
       }
 
       if (callLink) {
-        event.preventDefault();
         trackClick("call");
-        window.location.href = `tel:${settings.callNumber}`;
+        // No preventDefault() here so the native href="tel:..." works seamlessly
         return;
       }
 

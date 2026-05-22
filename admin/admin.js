@@ -715,7 +715,6 @@ let deferredPrompt;
 const installAppBtn = document.getElementById("installAppBtn");
 
 window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
     deferredPrompt = e;
     if (installAppBtn) installAppBtn.style.display = 'block';
 });

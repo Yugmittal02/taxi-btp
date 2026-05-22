@@ -1,4 +1,4 @@
-const CACHE_NAME = "admin-v4";
+const CACHE_NAME = "admin-v5";
 const STATIC_ASSETS = [
   "./",
   "./index.html",

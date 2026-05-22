@@ -241,12 +241,17 @@ import {
       });
     });
 
+    // Native tel: link setup
+    const telNumber = settings.callNumber || "9079923104";
+    const cleanNum = telNumber.startsWith("+") ? telNumber : "+91" + telNumber;
     [callBtn, footerCall].forEach((btn) => {
-      if (btn) btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        trackClick("call");
-        window.location.href = `tel:${settings.callNumber}`;
-      });
+      if (btn) {
+        btn.href = `tel:${cleanNum}`;
+        btn.addEventListener("click", () => {
+          // No preventDefault() here so the native href works seamlessly
+          trackClick("call");
+        });
+      }
     });
   }
 
